@@ -9,27 +9,30 @@ public class List {
     @SerializedName("dt")
     @Expose
     private Integer dt;
-    @SerializedName("main")
+    @SerializedName("temp")
     @Expose
-    private Main main;
+    private Temp temp;
+    @SerializedName("pressure")
+    @Expose
+    private Double pressure;
+    @SerializedName("humidity")
+    @Expose
+    private Integer humidity;
     @SerializedName("weather")
     @Expose
     private java.util.List<Weather> weather = null;
+    @SerializedName("speed")
+    @Expose
+    private Double speed;
+    @SerializedName("deg")
+    @Expose
+    private Integer deg;
     @SerializedName("clouds")
     @Expose
-    private Clouds clouds;
-    @SerializedName("wind")
+    private Integer clouds;
+    @SerializedName("snow")
     @Expose
-    private Wind wind;
-    @SerializedName("rain")
-    @Expose
-    private Rain rain;
-    @SerializedName("sys")
-    @Expose
-    private Sys sys;
-    @SerializedName("dt_txt")
-    @Expose
-    private String dtTxt;
+    private Double snow;
 
     public Integer getDt() {
         return dt;
@@ -39,12 +42,28 @@ public class List {
         this.dt = dt;
     }
 
-    public Main getMain() {
-        return main;
+    public Temp getTemp() {
+        return temp;
     }
 
-    public void setMain(Main main) {
-        this.main = main;
+    public void setTemp(Temp temp) {
+        this.temp = temp;
+    }
+
+    public Double getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(Double pressure) {
+        this.pressure = pressure;
+    }
+
+    public Integer getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(Integer humidity) {
+        this.humidity = humidity;
     }
 
     public java.util.List<Weather> getWeather() {
@@ -55,44 +74,36 @@ public class List {
         this.weather = weather;
     }
 
-    public Clouds getClouds() {
+    public Double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    public Integer getDeg() {
+        return deg;
+    }
+
+    public void setDeg(Integer deg) {
+        this.deg = deg;
+    }
+
+    public Integer getClouds() {
         return clouds;
     }
 
-    public void setClouds(Clouds clouds) {
+    public void setClouds(Integer clouds) {
         this.clouds = clouds;
     }
 
-    public Wind getWind() {
-        return wind;
+    public Double getSnow() {
+        return snow;
     }
 
-    public void setWind(Wind wind) {
-        this.wind = wind;
-    }
-
-    public Rain getRain() {
-        return rain;
-    }
-
-    public void setRain(Rain rain) {
-        this.rain = rain;
-    }
-
-    public Sys getSys() {
-        return sys;
-    }
-
-    public void setSys(Sys sys) {
-        this.sys = sys;
-    }
-
-    public String getDtTxt() {
-        return dtTxt;
-    }
-
-    public void setDtTxt(String dtTxt) {
-        this.dtTxt = dtTxt;
+    public void setSnow(Double snow) {
+        this.snow = snow;
     }
 
 }

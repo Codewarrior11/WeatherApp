@@ -3,21 +3,30 @@ package com.infinity.weather.appel.weatherapp;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ForecastAdapter extends ArrayAdapter<com.infinity.weather.appel.weatherapp.models.forecast.List> {
+import com.infinity.weather.appel.weatherapp.models.forecast.Weather;
+import com.infinity.weather.appel.weatherapp.models.forecast.List;
+import com.squareup.picasso.Picasso;
+
+import java.util.Calendar;
+import java.util.Locale;
+
+public class ForecastAdapter extends ArrayAdapter<List> {
     Context context;
-    java.util.List<com.infinity.weather.appel.weatherapp.models.forecast.List> forecastlist;
+    java.util.List<List> forecastlist;
 
-    public ForecastAdapter(@NonNull Context context, @NonNull java.util.List<com.infinity.weather.appel.weatherapp.models.forecast.List> forecastlist) {
+    public ForecastAdapter(@NonNull Context context, @NonNull java.util.List<List> forecastlist) {
         super(context, R.layout.forecast_weather_layout, forecastlist);
         this.context = context;
-        this.forecastlist=forecastlist;
+        this.forecastlist = forecastlist;
     }
 
 
@@ -25,32 +34,45 @@ public class ForecastAdapter extends ArrayAdapter<com.infinity.weather.appel.wea
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        ViewHolder viewHolder;
-        if(convertView==null) {
-            viewHolder=new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.forecast_weather_layout, parent, false);
-            viewHolder.days=convertView.findViewById(R.id.day);
-            viewHolder.date=convertView.findViewById(R.id.date);
-            viewHolder.min=convertView.findViewById(R.id.min);
-            viewHolder.max=convertView.findViewById(R.id.max);
-            viewHolder.fimage=convertView.findViewById(R.id.fimage);
-            convertView.setTag(viewHolder);
-
+        View view = LayoutInflater.from(context).inflate(R.layout.forecast_weather_layout, parent, false);
+        TextView days = view.findViewById(R.id.day);
+        TextView date = view.findViewById(R.id.date);
+        TextView min = view.findViewById(R.id.min);
+        TextView max = view.findViewById(R.id.max);
+        ImageView fimage = view.findViewById(R.id.fimage);
+        List list = forecastlist.get(position);
+        ///max.setText(String.valueOf(list.getTemp().getMax()));
+        date.setText(String.valueOf(list.getDt()));
+        min.setText("Min:"+String.valueOf(list.getTemp().getMin())+"°C");
+        max.setText("Max:"+String.valueOf(list.getTemp().getMax())+"°C");
+        date.setText(String.valueOf(dateformat(list.getDt())));
+        days.setText(String.valueOf(dayformat(list.getDt())));
+        java.util.List<Weather> weatherList = list.getWeather();
+        for (Weather obj : weatherList) {
+            String icon = String.valueOf(obj.getIcon());
+            Picasso.get().load("http://openweathermap.org/img/w/" + icon + ".png").into(fimage);
         }
-        else {
-            viewHolder=(ViewHolder)convertView.getTag();
-        }
-        for (com.infinity.weather.appel.weatherapp.models.forecast.List obj : forecastlist){
-            viewHolder.max.setText(String.valueOf(obj.getMain().getTempMax()));
-        }
 
-
-        return convertView;
+        return view;
     }
 
-    private static class ViewHolder{
-        TextView days,date,min,max,ficon;
-        ImageView fimage;
+    public String dateformat(int timestamp) {
+        //"EEE, MMM d, ''yy"  Wed, Jul 4, '01
+        //"h:mm a"    12:08 PM
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp * 1000L);
+        String date = DateFormat.format("MMMM d, yyyy", cal).toString();
 
+        return date;
+    }
+
+    public String dayformat(int timestamp) {
+        //"EEE, MMM d, ''yy"  Wed, Jul 4, '01
+        //"h:mm a"    12:08 PM
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp * 1000L);
+        String days = DateFormat.format("EEEE", cal).toString();
+
+        return days;
     }
 }

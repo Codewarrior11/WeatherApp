@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import com.infinity.weather.appel.weatherapp.api_collections.RetrofitClient;
 import com.infinity.weather.appel.weatherapp.api_collections.WeatherApi;
 import com.infinity.weather.appel.weatherapp.models.forecast.Forecast;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +26,7 @@ import retrofit2.Response;
 public class ForecastWeatherFragment extends Fragment {
     WeatherApi weatherApi;
     ListView forecastLV;
-    List<com.infinity.weather.appel.weatherapp.models.forecast.List> forecastlist;
+    java.util.List<List> forecastlist;
 
     @Nullable
     @Override
@@ -42,14 +45,8 @@ public class ForecastWeatherFragment extends Fragment {
             @Override
             public void onResponse(Call<Forecast> call, Response<Forecast> response) {
                 Forecast forecast = response.body();
-
-                forecastlist = forecast.getList();
-                ForecastAdapter forecastAdapter = new ForecastAdapter(getContext(), forecastlist);
+                ForecastAdapter forecastAdapter = new ForecastAdapter(getContext(), forecast.getList());
                 forecastLV.setAdapter(forecastAdapter);
-
-                for (com.infinity.weather.appel.weatherapp.models.forecast.List obj : forecastlist) {
-                    Toast.makeText(getContext(), "" + obj.getMain().getTemp(), Toast.LENGTH_LONG).show();
-                }
             }
 
             @Override
@@ -57,7 +54,6 @@ public class ForecastWeatherFragment extends Fragment {
                 Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
 
     }
 }

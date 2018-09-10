@@ -8,9 +8,9 @@ import retrofit2.http.GET;
 
 public interface WeatherApi {
 
-    @GET ("weather?q=Dhaka,bd&units=metric&appid=abb74ce02a1ee3459cd776bc87d50166")
+    @GET ("weather?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76")
     Call<CurrentWeather>getCurrentWeatherCall();
 
-    @GET("forecast?q=Dhaka,bd&units=metric&appid=abb74ce02a1ee3459cd776bc87d50166")
+    @GET("forecast/daily?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76")
     Call<Forecast>getForecastCall();
 }

@@ -12,15 +12,15 @@ public class Forecast {
     @SerializedName("message")
     @Expose
     private Double message;
+    @SerializedName("city")
+    @Expose
+    private City city;
     @SerializedName("cnt")
     @Expose
     private Integer cnt;
     @SerializedName("list")
     @Expose
-    private java.util.List<com.infinity.weather.appel.weatherapp.models.forecast.List> list = null;
-    @SerializedName("city")
-    @Expose
-    private City city;
+    private java.util.List<List> list = null;
 
     public String getCod() {
         return cod;
@@ -38,6 +38,14 @@ public class Forecast {
         this.message = message;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     public Integer getCnt() {
         return cnt;
     }
@@ -50,16 +58,8 @@ public class Forecast {
         return list;
     }
 
-    public void setList(java.util.List<com.infinity.weather.appel.weatherapp.models.forecast.List> list) {
+    public void setList(java.util.List<List> list) {
         this.list = list;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
     }
 
 }
