@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
                 Fragment activeFragment = adapter.getItem(pos);
                 if(pos == 0)
                     ((CurrentWeatherFragment)activeFragment).getCurrentWeather("weather?q="+s+"&units=metric&appid=e384f9ac095b2109c751d95296f8ea76");
+                else
+                    ((ForecastWeatherFragment)activeFragment).getForecastWeather("forecast/daily?q="+s+"&units=metric&appid=e384f9ac095b2109c751d95296f8ea76");
 
 
                 return true;

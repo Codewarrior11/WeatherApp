@@ -29,21 +29,20 @@ public class ForecastWeatherFragment extends Fragment {
     java.util.List<List> forecastlist;
     String url="forecast/daily?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76";
     String units="C";
-    String unitText="C";
+    //String unitText="C";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forcast_weather, container, false);
         forecastLV = view.findViewById(R.id.flist);
-        getForecastWeather(units);
+        getForecastWeather(url);
         return view;
     }
 
     public void getForecastWeather(String url) {
         weatherApi = RetrofitClient.getRetrofitClient().create(WeatherApi.class);
-        if (url.equalsIgnoreCase("C")) {
-            Call<Forecast> forecastCall = weatherApi.getForecastCall("forecast/daily?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76");
+            Call<Forecast> forecastCall = weatherApi.getForecastCall(url);
             forecastCall.enqueue(new Callback<Forecast>() {
                 @Override
                 public void onResponse(Call<Forecast> call, Response<Forecast> response) {
@@ -59,22 +58,5 @@ public class ForecastWeatherFragment extends Fragment {
             });
         }
 
-        else {
-            Call<Forecast> forecastCall = weatherApi.getForecastCall("forecast/daily?q=Dhaka,bd&units=imperial&appid=e384f9ac095b2109c751d95296f8ea76");
-            forecastCall.enqueue(new Callback<Forecast>() {
-                @Override
-                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-                    Forecast forecast = response.body();
-                    ForecastAdapter forecastAdapter = new ForecastAdapter(getContext(), forecast.getList());
-                    forecastLV.setAdapter(forecastAdapter);
-                }
 
-                @Override
-                public void onFailure(Call<Forecast> call, Throwable t) {
-                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
-        }
-
-    }
 }
