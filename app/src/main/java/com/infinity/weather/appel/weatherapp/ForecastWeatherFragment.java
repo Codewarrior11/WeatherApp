@@ -28,33 +28,53 @@ public class ForecastWeatherFragment extends Fragment {
     ListView forecastLV;
     java.util.List<List> forecastlist;
     String url="forecast/daily?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76";
+    String units="C";
+    String unitText="C";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_forcast_weather, container, false);
         forecastLV = view.findViewById(R.id.flist);
-        getForecastWeather();
+        getForecastWeather(units);
         return view;
     }
 
-    private void getForecastWeather() {
+    public void getForecastWeather(String url) {
         weatherApi = RetrofitClient.getRetrofitClient().create(WeatherApi.class);
-        Call<Forecast> forecastCall = weatherApi.getForecastCall(url);
+        if (url.equalsIgnoreCase("C")) {
+            Call<Forecast> forecastCall = weatherApi.getForecastCall("forecast/daily?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76");
+            forecastCall.enqueue(new Callback<Forecast>() {
+                @Override
+                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
+                    Forecast forecast = response.body();
+                    ForecastAdapter forecastAdapter = new ForecastAdapter(getContext(), forecast.getList());
+                    forecastLV.setAdapter(forecastAdapter);
+                }
 
-        forecastCall.enqueue(new Callback<Forecast>() {
-            @Override
-            public void onResponse(Call<Forecast> call, Response<Forecast> response) {
-                Forecast forecast = response.body();
-                ForecastAdapter forecastAdapter = new ForecastAdapter(getContext(), forecast.getList());
-                forecastLV.setAdapter(forecastAdapter);
-            }
+                @Override
+                public void onFailure(Call<Forecast> call, Throwable t) {
+                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
-            @Override
-            public void onFailure(Call<Forecast> call, Throwable t) {
-                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        else {
+            Call<Forecast> forecastCall = weatherApi.getForecastCall("forecast/daily?q=Dhaka,bd&units=imperial&appid=e384f9ac095b2109c751d95296f8ea76");
+            forecastCall.enqueue(new Callback<Forecast>() {
+                @Override
+                public void onResponse(Call<Forecast> call, Response<Forecast> response) {
+                    Forecast forecast = response.body();
+                    ForecastAdapter forecastAdapter = new ForecastAdapter(getContext(), forecast.getList());
+                    forecastLV.setAdapter(forecastAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<Forecast> call, Throwable t) {
+                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
 
     }
 }
