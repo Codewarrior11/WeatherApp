@@ -7,7 +7,28 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/white"
+            android:paddingLeft="10dp"
+            android:id="@+id/cityf"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="22sp"
+            android:gravity="center_vertical"
+            android:text="Dhaka" />
+
+        <ToggleButton
+            android:id="@+id/unitsf"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:textOff="°F"
+            android:textOn="°C" />
 
     </LinearLayout>
     <ListView

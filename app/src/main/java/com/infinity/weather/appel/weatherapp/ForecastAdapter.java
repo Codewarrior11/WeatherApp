@@ -43,8 +43,14 @@ public class ForecastAdapter extends ArrayAdapter<List> {
         List list = forecastlist.get(position);
         ///max.setText(String.valueOf(list.getTemp().getMax()));
         date.setText(String.valueOf(list.getDt()));
-        min.setText("Min:"+String.valueOf(list.getTemp().getMin())+"°C");
-        max.setText("Max:"+String.valueOf(list.getTemp().getMax())+"°C");
+        if (list.getTemp().getMin()>70&&list.getTemp().getMax()>70){
+            min.setText("Min:"+String.valueOf(list.getTemp().getMin())+"°F");
+            max.setText("Max:"+String.valueOf(list.getTemp().getMax())+"°F");
+        }
+        else {
+            min.setText("Min:" + String.valueOf(list.getTemp().getMin()) + "°C");
+            max.setText("Max:" + String.valueOf(list.getTemp().getMax()) + "°C");
+        }
         date.setText(String.valueOf(dateformat(list.getDt())));
         days.setText(String.valueOf(dayformat(list.getDt())));
         java.util.List<Weather> weatherList = list.getWeather();
