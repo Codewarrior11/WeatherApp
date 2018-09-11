@@ -27,6 +27,7 @@ public class ForecastWeatherFragment extends Fragment {
     WeatherApi weatherApi;
     ListView forecastLV;
     java.util.List<List> forecastlist;
+    String url="forecast/daily?q=Dhaka,bd&units=metric&appid=e384f9ac095b2109c751d95296f8ea76";
 
     @Nullable
     @Override
@@ -39,7 +40,7 @@ public class ForecastWeatherFragment extends Fragment {
 
     private void getForecastWeather() {
         weatherApi = RetrofitClient.getRetrofitClient().create(WeatherApi.class);
-        Call<Forecast> forecastCall = weatherApi.getForecastCall();
+        Call<Forecast> forecastCall = weatherApi.getForecastCall(url);
 
         forecastCall.enqueue(new Callback<Forecast>() {
             @Override

@@ -188,6 +188,18 @@
         android:textColor="@color/black"
         android:textSize="22sp" />
 
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="67dp"
+        android:layout_height="35dp"
+        android:layout_alignBaseline="@+id/cityName"
+        android:layout_marginStart="-77dp"
+        android:layout_toEndOf="@+id/ctemp"
+        android:checked="true"
+        android:onClick="toggleClick"
+        android:textOff="°F"
+        android:textOn="°C" />
+
 
 
 </RelativeLayout>
